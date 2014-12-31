@@ -6,7 +6,7 @@ include("config.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // username and comment sent from Form 
   $myusername=$_POST['username']; 
-  $mycomment=addslashes($_POST['comment']); 
+  $mycomment=$_POST['comment']; 
 
   $sql="UPDATE users SET comment = '$mycomment' WHERE username = '$myusername'";
   $result=mysql_query($sql);

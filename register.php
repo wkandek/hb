@@ -6,6 +6,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // username and password sent from Form - username is XSS able 
   $myusername=$_POST['username']; 
+  // input encoding example
   // $myusername=addslashes($_POST['username']); 
   $mypassword=addslashes($_POST['password']); 
 
