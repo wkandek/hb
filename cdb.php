@@ -6,10 +6,10 @@ include("config.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $mytest=addslashes($_POST['test']); 
   if ( $mytest == "9" ) {
-    $sql="drop table users";
+    $sql="DROP TABLE IF EXISTS users";
     $result=mysql_query($sql);
     if ( $result === TRUE ) {
-      $sql="CREATE TABLE users (ID MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(60), password VARCHAR(60))";
+      $sql="CREATE TABLE users (ID MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(60), password VARCHAR(60), comment VARCHAR(60))";
       $result=mysql_query($sql);
     }
     else 

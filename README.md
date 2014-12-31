@@ -17,3 +17,7 @@ Also a number of Web Application problems:
     then login with at name without the \ 
     or another user and list users
 
+3. XSS vulnerability in useredit.php and users.php
+  - comment field can be anything
+  - <script>alert("XSS")</script> as comment works 
+

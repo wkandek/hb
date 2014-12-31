@@ -13,14 +13,16 @@ include('lock.php');
 <body>
 <h3>Userlist</h3>
 <?php
-  $sql="SELECT id, username FROM users ORDER BY id DESC LIMIT 20";
+  $sql="SELECT id, username, comment FROM users ORDER BY id DESC LIMIT 20";
   $result=mysql_query($sql);
-  echo "<TABLE>";
+  echo "<TABLE border=1>";
   while ( $row=mysql_fetch_array($result)) {
-    echo "<TR><TD>".$row["id"]."</TD><TD>".$row["username"]."</TD></TR>";
+    echo "<TR><TD>".$row["id"]."</TD><TD>".$row["username"]."</TD>";
+    echo "<TD>".$row["comment"]."</TD></TR>";
   }
   echo "</TABLE>";
 ?>
+<a href="useredit.php">Edit One</a> or
 <a href="welcome.php">Back</a> or
 <a href="logout.php">Sign Out</a>
 </body>
