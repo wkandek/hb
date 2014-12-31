@@ -14,10 +14,10 @@ include('lock.php');
 Welcome <?php echo $login_session; ?>
 
 <UL>
-<LI><A href=l1.html>Link 1</A>
-<LI><A href=l2.html>Link 2</A>
-<LI><A href=l3.html>Link 3</A>
+<LI><A href=l1b.html>Link 1</A>
+<LI><A href=l2b.html>Link 2</A>
+<LI><A href=l3b.html>Link 3</A>
 </UL>
-<a href=usersb.php>Userlist</a> or <a href="logout.php">Sign Out</a>
+<a href=userqueryb.php>Find a user</a> or <a href=usersb.php>Userlist</a> or <a href="logoutb.php">Sign Out</a>
 </body>
 </html>
