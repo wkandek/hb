@@ -1,17 +1,20 @@
 <?php
 
 include("config.php");
-$cp = session_get_cookie_params();
-session_set_cookie_params( $cp["lifetime"], $cp["path"], $cp["domain"], true, true );
+
+// make sure cookie are for HTTPOnly and Secure
+// $cp = session_get_cookie_params();
+// session_set_cookie_params( $cp["lifetime"], $cp["path"], $cp["domain"], true, true );
 session_start();
 
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-// username and password sent from form 
-  $myusername=addslashes($_POST['username']); 
+// are we the rsult of a Submit click then try to login
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // username and password sent from Form 
+  $myusername=$_POST['username']; 
+  //$myusername=addslashes($_POST['username']); 
   $mypassword=addslashes($_POST['password']); 
 
-  $sql="SELECT id FROM users WHERE username='$myusername' and password=PASSWORD('".$mypassword."')";
+  $sql="SELECT id FROM users WHERE username='".$myusername."' and password=PASSWORD('".$mypassword."')";
   $result=mysql_query($sql);
   $row=mysql_fetch_array($result);
   $active=$row['active'];
@@ -31,6 +34,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   }
 }
 ?>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

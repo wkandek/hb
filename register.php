@@ -3,10 +3,10 @@
 include("config.php");
 session_start();
 
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-// username and password sent from form 
-  $myusername=addslashes($_POST['username']); 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // username and password sent from Form - username is XSS able 
+  $myusername=$_POST['username']; 
+  // $myusername=addslashes($_POST['username']); 
   $mypassword=addslashes($_POST['password']); 
 
   $sql="INSERT INTO users ( username ) VALUES ('$myusername')";
