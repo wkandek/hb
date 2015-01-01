@@ -1,6 +1,5 @@
 <?php
 
-include('configb.php');
 include('lockb.php');
 
 ?>

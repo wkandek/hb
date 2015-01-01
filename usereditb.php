@@ -1,6 +1,6 @@
 <?php
 
-include("configb.php");
+include("lockb.php");
 
 // are we the rsult of a Submit click then try to login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

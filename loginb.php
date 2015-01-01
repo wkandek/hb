@@ -75,7 +75,7 @@ font-size:14px;
 
 </form>
 <div style="font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
-You can register <a href=register.php>here</a> if needed.<br>
+You can register <a href=registerb.php>here</a> if needed.<br>
 </div>
 </div>
 </div>

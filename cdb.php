@@ -11,6 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ( $result === TRUE ) {
       $sql="CREATE TABLE users (ID MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(60), password VARCHAR(60), comment VARCHAR(60))";
       $result=mysql_query($sql);
+      $sql="INSERT INTO users (username, password) VALUES( 'qscanner', Password('qscanner'))";
+      $result=mysql_query($sql);
     }
     else 
     {
