@@ -1,6 +1,6 @@
 <?php
 
-include("config.php");
+include("lock.php");
 
 // are we the rsult of a Submit click then try to login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -9,9 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $mycomment=$_POST['comment']; 
 
   $sql="UPDATE users SET comment = '$mycomment' WHERE username = '$myusername'";
-  $result=mysql_query($sql);
+  $result = $bd->query($sql);
 
-  // If result matched $myusername and $mypassword, table row must be 1 row
+  // If result ok redirect to list
   if ($result === TRUE) {
     header("location: users.php");
   }

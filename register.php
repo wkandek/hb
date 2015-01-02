@@ -11,10 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $mypassword=addslashes($_POST['password']); 
 
   $sql="INSERT INTO users ( username, comment ) VALUES ('$myusername','No comment')";
-  $result=mysql_query($sql);
+  $result=$bd->query($sql);
   if ( $result === TRUE ) {
     $sql="UPDATE users SET password = PASSWORD('".$myusername."') WHERE username = '$myusername'";
-    $result=mysql_query($sql);
+    $result=$bd->query($sql);
 
     header("location: login.php");
   }

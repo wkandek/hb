@@ -14,23 +14,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   //$myusername=addslashes($_POST['username']); 
   $mypassword=addslashes($_POST['password']); 
 
-  $sql="SELECT id FROM users WHERE username='".$myusername."' and password=PASSWORD('".$mypassword."')";
-  $result=mysql_query($sql);
-  $row=mysql_fetch_array($result);
-  $active=$row['active'];
+  $sql = "SELECT id FROM users WHERE username= ? and password = PASSWORD( ? )";
+  $stmt = $bd->prepare( $sql );
+  if ( $stmt->bind_param( "ss", $myusername, $mypassword )) {
+    $stmt->execute();
+    $stmt->store_result();
+    $count = $stmt->num_rows;
+    // If result matched $myusername and $mypassword, table row must be 1 row
+    if ($count >= 1) {
+      session_register("myusername");
+      $_SESSION['login_user']=$myusername;
 
-  $count=mysql_num_rows($result);
-
-  // If result matched $myusername and $mypassword, table row must be 1 row
-  if ($count==1) {
-    session_register("myusername");
-    $_SESSION['login_user']=$myusername;
-
-    header("location: welcome.php");
-  }
-  else 
-  {
-    $error="Your Login Name or Password is invalid";
+      header("location: welcome.php");
+    }
+    else 
+    {
+      $error="Your Login Name or Password is invalid $count";
+    }
   }
 }
 ?>

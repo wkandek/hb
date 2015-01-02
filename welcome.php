@@ -18,6 +18,6 @@ Welcome <?php echo $login_session; ?>
 <LI><A href=l2.html>Link 2</A>
 <LI><A href=l3.html>Link 3</A>
 </UL>
-<a href=users.php>Userlist</a> or <a href="logout.php">Sign Out</a>
+<a href=userquery.php>Find a user</a> or <a href=users.php>Userlist</a> or <a href="logout.php">Sign Out</a>
 </body>
 </html>

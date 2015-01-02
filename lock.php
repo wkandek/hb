@@ -2,11 +2,11 @@
 include('config.php');
 session_start();
 $user_check=$_SESSION['login_user'];
-$ses_sql=mysql_query("select username from users where username='$user_check' ");
-$row=mysql_fetch_array($ses_sql);
+$ses_sql = $bd->query("select username from users where username='$user_check' ");
+$row=$ses_sql->fetch_array(MYSQLI_ASSOC);
 $login_session=$row['username'];
 
 if(!isset($login_session)) {
-  header("Location: login.php");
+  header("Location: loginp.php");
 }
 ?>

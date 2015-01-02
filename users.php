@@ -12,10 +12,10 @@ include('lock.php');
 <body>
 <h3>Userlist</h3>
 <?php
-  $sql="SELECT id, username, comment FROM users ORDER BY id DESC LIMIT 20";
-  $result=mysql_query($sql);
+  $sql = "SELECT id, username, comment FROM users ORDER BY id DESC LIMIT 20";
+  $result = $bd->query( $sql );
   echo "<TABLE border=1>";
-  while ( $row=mysql_fetch_array($result)) {
+  while ( $row = $result->fetch_array(MYSQLI_ASSOC)) {
     // output encoding example
     $myid = mb_convert_encoding( $row["id"], 'UTF-8', 'UTF-8' );
     $myid = htmlentities( $myid, ENT_QUOTES, 'UTF-8' );
