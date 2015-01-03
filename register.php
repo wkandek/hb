@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $sql="INSERT INTO users ( username, comment ) VALUES ('$myusername','No comment')";
   $result=$bd->query($sql);
   if ( $result === TRUE ) {
-    $sql="UPDATE users SET password = PASSWORD('".$myusername."') WHERE username = '$myusername'";
+    $sql="UPDATE users SET password = PASSWORD('".$mypassword."') WHERE username = '$myusername'";
     $result=$bd->query($sql);
 
     header("location: login.php");
