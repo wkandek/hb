@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($count >= 1) {
       session_register("myusername");
       $_SESSION['login_user']=$myusername;
+      $_SESSION['ipaddress']=$_SERVER['REMOTE_ADDR'];
 
       header("location: welcome.php");
     }
