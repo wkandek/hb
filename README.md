@@ -1,4 +1,4 @@
-Simple Heartbleed Demo site with rgeister and login functionality
+Simple Heartbleed Demo site with register and login functionality
 
 1. ubuntu 12.04 w/ apache2 SSL enabled with a2enmod SSL
 - login.php and register.php give functionality to register
