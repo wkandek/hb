@@ -33,6 +33,6 @@ Remedies:
 
 2. register.php encodes inputs in comments
 
-3. output endcoding helps - exple in usersb.php
+3. output encoding helps - example in usersb.php
 
 4. prepared SQL helps code in comments there
