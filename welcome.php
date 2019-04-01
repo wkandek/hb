@@ -11,13 +11,15 @@ include('lock.php');
 </head>
 
 <body>
-Welcome <?php echo $login_session; ?>
+Welcome to HansBooks, user <?php echo $login_session; ?>
 
 <UL>
-<LI><A href=l1.html>Link 1</A>
-<LI><A href=l2.html>Link 2</A>
-<LI><A href=l3.html>Link 3</A>
+<LI><A href=l1.php>Transactions</A>
+<LI><A href=l2.php>Books</A>
+<LI><A href=l3.php>To Do</A>
+<LI><A href=listdir.php>List Files</A>
 </UL>
-<a href=userquery.php>Find a user</a> or <a href=users.php>Userlist</a> or <a href="logout.php">Sign Out</a>
+<a href=userquery.php>Find a user</a> or <a href=users.php>Userlist</a> or <a href=uploadform.php>Upload a File</a> or
+<a href=logout.php>Sign Out</a>
 </body>
 </html>

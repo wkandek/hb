@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   //$myusername=addslashes($_POST['username']); 
   $mypassword=addslashes($_POST['password']); 
 
-  $sql = "SELECT id FROM users WHERE username= ? and password = PASSWORD( ? )";
+  //$sql = "SELECT id FROM users WHERE username = ? and password = PASSWORD( ? )";
+  $sql = "SELECT id FROM users WHERE username = ? and password =  ? ";
   $stmt = $bd->prepare( $sql );
   if ( $stmt->bind_param( "ss", $myusername, $mypassword )) {
     $stmt->execute();
@@ -22,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $count = $stmt->num_rows;
     // If result matched $myusername and $mypassword, table row must be 1 row
     if ($count >= 1) {
-      session_register("myusername");
+      // session_register("myusername");
+      $_SESSION["myusername"]="myusername";
       $_SESSION['login_user']=$myusername;
       $_SESSION['ipaddress']=$_SERVER['REMOTE_ADDR'];
 
@@ -64,7 +66,7 @@ font-size:14px;
 
 <div align="center">
 <div style="width:300px; border: solid 1px #333333; " align="left">
-<div style="background-color:#333333; color:#FFFFFF; padding:3px;"><b>Login</b></div>
+<div style="background-color:#333333; color:#FFFFFF; padding:3px;"><b>HansBooks Login</b></div>
 
 
 <div style="margin:30px">

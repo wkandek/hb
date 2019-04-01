@@ -10,11 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // $myusername=addslashes($_POST['username']); 
   $mypassword=addslashes($_POST['password']); 
 
-  $sql="INSERT INTO users ( username, comment ) VALUES ('$myusername','No comment')";
+  //$sql="INSERT INTO users(username, comment, password) VALUES ('$myusername','No comment',PASSWORD('$mypassword'))";
+  $sql="INSERT INTO users ( username, comment, password ) VALUES ('$myusername','No comment','$mypassword')";
   $result=$bd->query($sql);
   if ( $result === TRUE ) {
-    $sql="UPDATE users SET password = PASSWORD('".$mypassword."') WHERE username = '$myusername'";
-    $result=$bd->query($sql);
+    //$sql="UPDATE users SET password = ".$mypassword." WHERE username = '$myusername'";
+    //$sql="UPDATE users SET password = PASSWORD('".$mypassword."') WHERE username = '$myusername'";
+    //$result=$bd->query($sql);
 
     header("location: login.php");
   }
